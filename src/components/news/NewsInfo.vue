@@ -58,9 +58,7 @@ import comment from "../subcomponents/comment.vue";
         display: flex;
         justify-content: space-between;
     }
-    .content{
-
-    }
+    
 }
     
 </style>

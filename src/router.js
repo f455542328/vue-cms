@@ -7,6 +7,8 @@ import HomeContainer from './components/tabbar/HomeContainer.vue'
 import NewsList from './components/news/NewsList.vue'
         //导入新闻详情页
 import NewsInfo from './components/news/NewsInfo.vue'
+    //导入图片分享组件
+import PhotoList from './components/photos/PhotoList.vue'
 import MemberContainer from './components/tabbar/MemberContainer.vue'
 import SearchContainer from './components/tabbar/SearchContainer.vue'
 import ShopCarContainer from './components/tabbar/ShopCarContainer.vue'
@@ -18,6 +20,7 @@ var router = new VueRouter({
     {path: '/home',component: HomeContainer},
     {path: '/home/newslist',component: NewsList},
     {path: '/home/newsinfo/:id',component: NewsInfo},
+    {path: '/home/photolist',component: PhotoList},
     {path: '/member',component: MemberContainer},
     {path: '/search',component: SearchContainer},
     {path: '/shopcar',component: ShopCarContainer},

@@ -9,20 +9,26 @@
       rows="10"
       placeholder="请输入评论内容最多120字"
       maxlength="120"
+      v-model="msg"
     ></textarea>
     <mt-button
       type="primary"
       size="large"
+      @click="postComment"
     >发表评论</mt-button>
     <div class="cmt-list">
-      <div class="cmt-item" v-for="(item,i) in comments" :key="item.add_time">
+      <div
+        class="cmt-item"
+        v-for="(item,i) in comments"
+        :key="item.add_time"
+      >
         <div class="cmt-title">
           第{{ i+1}}楼&nbsp;&nbsp;用户:{{item.user_name}}&nbsp;&nbsp;发表时间:{{ item.add_time | dateFormat}}
         </div>
-        <div class="cmt-body" >
-            <!-- <p v-if="item.content === undefined">此用户很烂</p>
+        <div class="cmt-body">
+          <!-- <p v-if="item.content === undefined">此用户很烂</p>
             <p v-else> {{ item.content }}</p> -->
-           
+
           {{item.content === "undefined" ? '此用户很烂' : item.content }}
         </div>
       </div>
@@ -39,57 +45,81 @@
 <script>
 import { Toast } from "mint-ui";
 export default {
-    data() {
-        return {
-            pageIndex: 1,
-            comments: []
-        }
+  data() {
+    return {
+      pageIndex: 1,
+      comments: [],
+      msg: ""
+    };
+  },
+  created() {
+    this.getComments();
+  },
+  methods: {
+    getComments() {
+      this.$http
+        .get("api/getcomments/" + this.id + "?pageindex=" + this.pageIndex)
+        .then(result => {
+          if (result.body.status === 0) {
+            this.comments = this.comments.concat(result.body.message);
+            // console.log(this.comments);
+          } else {
+            Toast("获取评论失败!");
+          }
+        });
     },
-    created() {
-        this.getComments();
+    getMore() {
+      this.pageIndex++, this.getComments();
     },
-    methods: {
-        getComments(){
-            this.$http.get("api/getcomments/" + this.id + "?pageindex=" + this.pageIndex).then(result => {
-                if(result.body.status === 0 ){
-                    this.comments = this.comments.concat(result.body.message);
-                   // console.log(this.comments);
-                }else{
-                    Toast("获取评论失败!")
-                }
-            });
-        },
-        getMore(){
-            this.pageIndex++,
-            this.getComments()
-        }
-
-    },
-    props: ["id"],
-
+    postComment() {
+      //首先判断评论内容是否为空
+      if (this.msg.trim().length === 0) {
+        return Toast("评论内容不能为空!请重新输入");
+      }
+      //发表评论
+      this.$http
+        .post("api/postcomment/" + this.$route.params.id, {
+          content: this.msg.trim()
+        })
+        .then(function(result) {
+          if (result.body.status === 0) {
+            var cmt = {
+              user_name: "匿名用户",
+              add_time: Date.now(),
+              content: this.msg.trim()
+            };
+            this.comments.unshift(cmt);
+            this.msg = "";
+          } else {
+            return Toast("获取最新评论失败,请刷新重试!");
+          }
+        });
+    }
+  },
+  props: ["id"]
 };
 </script>
 
 <style lang="scss" scoped>
 .cmt-container {
-    h3{
-        font-size:18px;
-    }
-    textarea{
-        font-size:14px; 
-        height: 85px;
-        margin: 0;
-    }
+  h3 {
+    font-size: 18px;
+  }
+  textarea {
+    font-size: 14px;
+    height: 85px;
+    margin: 0;
+  }
   .cmt-list {
-      margin: 5px 0;
+    margin: 5px 0;
     .cmt-item {
       .cmt-title {
-          background-color: #ccc;
-          line-height: 30px;
+        background-color: #ccc;
+        line-height: 30px;
       }
       .cmt-body {
-          line-height: 35px;
-          text-indent: 2em;
+        line-height: 35px;
+        text-indent: 2em;
       }
     }
   }

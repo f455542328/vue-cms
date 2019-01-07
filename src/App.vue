@@ -37,6 +37,9 @@
 </template>
 
 <script>
+import mui from './lib/mui/js/mui.min.js'
+mui('body').on('tap','a',function(){document.location.href=this.href;});
+
 </script>
 
 

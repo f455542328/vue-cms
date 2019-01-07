@@ -26,6 +26,7 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 //全局配置接口地址
 Vue.http.options.root = 'http://47.89.21.179:8080'
+Vue.http.options.emulateJSON = true
 
 //导入mui样式
 import './lib/mui/css/mui.min.css'

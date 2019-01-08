@@ -8,11 +8,15 @@ import router from './router.js'
 
 //按需导入Mint-ui组件
     //轮播图组件
-import { Header, Swipe, SwipeItem, Button } from 'mint-ui';
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
-Vue.component(Header.name, Header);
-Vue.component(Button.name, Button);
+
+import MintUI from 'mint-ui';
+
+// Vue.component(Swipe.name, Swipe);
+// Vue.component(SwipeItem.name, SwipeItem);
+// Vue.component(Header.name, Header);
+// Vue.component(Button.name, Button);
+Vue.use(MintUI);
+import 'mint-ui/lib/style.css'
 //导入时间插件
 import moment from 'moment'
 
@@ -20,6 +24,9 @@ import moment from 'moment'
 Vue.filter('dateFormat',function(dataStr,pattern = "YYYY-MM-DD HH:mm:ss"){
     return moment(dataStr).format(pattern)
 })
+//安装图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
 
 //导入vue-resource
 import VueResource from 'vue-resource'

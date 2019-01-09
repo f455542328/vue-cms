@@ -12,6 +12,8 @@ import PhotoList from './components/photos/PhotoList.vue'
 import PhotoInfo from './components/photos/PhotoInfo.vue'
 import GoodsList from './components/goods/GoodsList.vue'
 import GoodsInfo from './components/goods/GoodsInfo.vue'
+import GoodsDesc from './components/goods/GoodsDesc.vue'
+import GoodsComment from './components/goods/GoodsComment.vue'
 import MemberContainer from './components/tabbar/MemberContainer.vue'
 import SearchContainer from './components/tabbar/SearchContainer.vue'
 import ShopCarContainer from './components/tabbar/ShopCarContainer.vue'
@@ -27,6 +29,8 @@ var router = new VueRouter({
     {path: '/home/photoinfo/:id',component: PhotoInfo},
     {path: '/home/goodslist',component: GoodsList},
     {path: '/home/goodsinfo/:id',component: GoodsInfo},
+    {path: '/home/goodsdesc/:id',component: GoodsDesc,name: 'goodsdesc'},
+    {path: '/home/goodscomment/:id',component: GoodsComment,name: 'goodscomment'},
     {path: '/member',component: MemberContainer},
     {path: '/search',component: SearchContainer},
     {path: '/shopcar',component: ShopCarContainer},
